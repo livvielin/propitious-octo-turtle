@@ -7,8 +7,17 @@ var ListView = Backbone.View.extend({
   initialize: function () {
     // Listen for an added wiki to the collection
     this.listenTo(this.collection, 'add', this.render);
-    // Render on startup
-    this.render();
+
+    // GET collection data from database
+    var context = this;
+    this.collection.fetch({
+      success: function (response) {
+        console.log('Successfully got wiki data!');
+        // Render on startup
+        // Passed as callback so collection will sync with db before rendering
+        context.render();
+      }
+    });
   },
 
   render: function () {
