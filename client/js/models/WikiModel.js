@@ -4,6 +4,8 @@ var WikiModel = Backbone.Model.extend({
   // Set defaults for the model
   defaults: {
     searchTerm: ''
-  }
+  },
+
+  url: 'http://localhost:3000/wiki'
 
 });
