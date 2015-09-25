@@ -1,4 +1,21 @@
 // Define a view for individual wikis
 var WikiView = Backbone.View.extend({
-  // TODO
+
+  // Set class name for css styling
+  className: 'entry',
+
+  template: _.template('<p>Searching <%= searchTerm %>...</p>'),
+
+  initialize: function () {
+    this.render();
+  },
+
+  render: function () {
+    // Set the html for the wiki entry
+    // Apply the template
+    this.$el.html(this.template({
+      searchTerm: this.model.get('searchTerm')
+    }));
+  }
+
 });
