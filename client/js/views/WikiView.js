@@ -12,7 +12,7 @@ var WikiView = Backbone.View.extend({
 
   render: function () {
     // Set the html for the wiki entry
-    // Apply the template
+    // Apply the template, getting proper attribute from the model
     this.$el.html(this.template({
       searchTerm: this.model.get('searchTerm')
     }));

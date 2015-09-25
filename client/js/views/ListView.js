@@ -6,7 +6,8 @@ var ListView = Backbone.View.extend({
 
   initialize: function () {
     // Listen for an added wiki to the collection
-    // TODO
+    this.listenTo(this.collection, 'add', this.render);
+    // Render on startup
     this.render();
   },
 
@@ -17,7 +18,7 @@ var ListView = Backbone.View.extend({
     // Iterate through collection, which is a wiki collection
     // Get an array of wiki views
     var entries = this.collection.map(function (model) {
-      return new WikiView({ 'model': model }).render();
+      return new WikiView({ 'model': model });
     });
 
     // Get the DOM elements for each wiki entry

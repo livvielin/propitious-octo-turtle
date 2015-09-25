@@ -21,9 +21,9 @@ var InputView = Backbone.View.extend({
   // Listen specifically for the 'enter' key on a keypress
   keyAction: function (e) {
     if (e.which === 13) {
-      // Do something with the input
-      // TODO
-
+      // Add the input as a search term to the wiki collection
+      // Call function from collection
+      this.collection.addWiki(this.$el.val);
       // Empty the text box
       this.$el.val('');
     }
