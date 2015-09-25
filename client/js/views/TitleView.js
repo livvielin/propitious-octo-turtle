@@ -4,6 +4,7 @@ var TitleView = Backbone.View.extend({
   el: '<h1>',
 
   initialize: function () {
+    // Immediately render title view
     this.render();
   },
 
