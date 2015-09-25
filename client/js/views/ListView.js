@@ -1,4 +1,4 @@
-// Instantiate a view for the list of wikis
+// Define a view for the list of wikis
 var ListView = Backbone.View.extend({
   // TODO
 });

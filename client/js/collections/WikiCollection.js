@@ -1,4 +1,4 @@
-// Instantiate a collection of WikiModels
+// Define a collection of WikiModels
 var WikiCollection = Backbone.Collection.extend({
   // TODO
 });

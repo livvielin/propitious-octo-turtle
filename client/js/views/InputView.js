@@ -1,4 +1,4 @@
-// Instantiate a view for the user input box
+// Define a view for the user input box
 var InputView = Backbone.View.extend({
   // TODO
 });
