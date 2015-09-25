@@ -23,7 +23,7 @@ var InputView = Backbone.View.extend({
     if (e.which === 13) {
       // Add the input as a search term to the wiki collection
       // Call function from collection
-      this.collection.addWiki(this.$el.val);
+      this.collection.addWiki(this.$el.val());
       // Empty the text box
       this.$el.val('');
     }
