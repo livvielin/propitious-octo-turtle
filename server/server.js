@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 var app = express();
 // Serve up client files
-app.use(express.static(__dirname + '/client'));
+app.use(express.static(__dirname + '/../client'));
 app.use(bodyParser.json());
 
 // Set up port
