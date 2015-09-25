@@ -40,7 +40,6 @@ var getWiki = function (req, res) {
   console.log('mongodbServer getWiki');
 
   Wiki.find(function (err, data) {
-    console.log(data);
     res.send(data);
   });
 };
@@ -59,7 +58,7 @@ var postWiki = function (req, res) {
 
   // Create new wiki model, fill it, and save it to mongoDB
   var wiki = new Wiki();
-  wiki.searchTerm = req.params.searchTerm;
+  wiki.searchTerm = req.body.searchTerm;
   wiki.content = 'content!';
   wiki.url = 'http://www.wikipedia.org';
   wiki.save(function (err, result) {
