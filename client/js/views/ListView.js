@@ -9,6 +9,7 @@ var ListView = Backbone.View.extend({
     this.listenTo(this.collection, 'add', this.getData);
     // Listen for a removed wiki to the collection
     this.listenTo(this.collection, 'remove', this.getData);
+    this.listenTo(this.collection, 'change:airDate', this.getData);
     this.getData();
   },
 

@@ -2,6 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var http = require('http');
+var cheerio = require('cheerio');
+var request = require('request');
 
 var mongoURI = 'mongodb://localhost/wiki';
 // Connect to mongo database
@@ -38,6 +40,18 @@ var getCurrentDate = function () {
   }
   var currentDate = mm + '/' + dd + '/' + yyyy;
   return currentDate;
+};
+
+var scrape = function (url) {
+  console.log('scraping', url);
+
+  request(url, function (err, res, html) {
+    if (!err) {
+      var $ = cheerio.load(html);
+      airDate = $('title').text();
+      console.log(airDate);
+    }
+  });
 };
 
 // ROUTES
@@ -93,6 +107,19 @@ var postWiki = function (req, res) {
 
 var updateWiki = function (req, res) {
   console.log('mongoDBServer updateWiki');
+  // var airDate = scrape(req.body.url);
+  // console.log(airDate);
+
+  request(req.body.url, function (err, response, html) {
+    if (!err) {
+      var $ = cheerio.load(html);
+      var json = { airDate: '' };
+      Wiki.update({ _id: req.params.id }, json, function (err) {
+        res.send(json);
+      });
+    }
+  });
+
 };
 
 var deleteWiki = function (req, res) {
