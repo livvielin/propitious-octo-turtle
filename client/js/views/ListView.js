@@ -10,11 +10,14 @@ var ListView = Backbone.View.extend({
     // Listen for a removed wiki to the collection
     this.listenTo(this.collection, 'remove', this.render);
 
+    // this.listenTo(this.collection, 'change', this.render);
+
     // GET collection data from database
     var context = this;
     this.collection.fetch({
       success: function (response) {
         console.log('Successfully got wiki data!');
+        context.collection.updateWiki();
         // Render on startup
         // Passed as callback so collection will sync with db before rendering
         context.render();

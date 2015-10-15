@@ -32,6 +32,15 @@ var WikiCollection = Backbone.Collection.extend({
         console.log('Failed to save wiki!');
       }
     });
+  },
+
+  updateWiki: function () {
+    this.each(function (model) {
+      // Get model's url for HTTPS get request
+      var url = model.get('url');
+      console.log(url);
+      // model.set('airDate', '10/28/15');
+    });
   }
 
 });

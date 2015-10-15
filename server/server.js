@@ -11,7 +11,7 @@ var Schema = mongoose.Schema;
 
 var WikiSchema = new Schema({
   searchTerm: String,
-  airDate: {type: Date, default: Date.now},
+  airDate: String,
   url: String
 });
 
@@ -23,6 +23,27 @@ var app = express();
 // Serve up client files
 app.use(express.static(__dirname + '/../client'));
 app.use(bodyParser.json());
+
+// Function called in update (so it'll update on re-render) and post requests (initial)
+var searchWiki = function (url) {
+  // Submit request for html page based on url
+  // Search DOM
+  
+
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = '0' + dd;
+  }
+  if (mm < 10) {
+    mm = '0' + mm;
+  }
+  var currentDate = mm + '/' + dd + '/' + yyyy;
+  return currentDate;
+  // return '10/28/2015';
+};
 
 // ROUTES
 
@@ -60,10 +81,12 @@ var postWiki = function (req, res) {
   var tvUrl = req.body.searchTerm.split(' ').join('_');
   var url = 'https://en.wikipedia.org/w/index.php?action=render&title=List_of_' + tvUrl + '_episodes';
 
+  console.log(searchWiki(url));
+
   // Create new wiki model, fill it, and save it to mongoDB
   var wiki = new Wiki();
   wiki.searchTerm = req.body.searchTerm;
-  // wiki.airDate = Date.now;
+  wiki.airDate = searchWiki();
   wiki.url = url;
   wiki.save(function (err, result) {
     if (err) {
