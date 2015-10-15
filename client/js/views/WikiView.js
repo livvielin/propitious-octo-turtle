@@ -1,6 +1,12 @@
 // Define a view for individual wikis
 var WikiView = Backbone.View.extend({
 
+  model: new WikiModel(),
+
+  events: {
+    'click': 'deleteWiki'
+  },
+
   // Set class name for css styling
   className: 'entry',
 
@@ -8,6 +14,18 @@ var WikiView = Backbone.View.extend({
 
   initialize: function () {
     this.render();
+  },
+
+  deleteWiki: function () {
+    this.model.destroy({
+      success: function (response) {
+        console.log(response);
+        console.log('Successfully DELETED wiki with _id: ' + response.id);
+      },
+      error: function (err) {
+        console.log('Failed to DELETE wiki!');
+      }
+    });
   },
 
   render: function () {

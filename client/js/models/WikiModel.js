@@ -6,6 +6,8 @@ var WikiModel = Backbone.Model.extend({
     searchTerm: ''
   },
 
-  url: 'http://localhost:3000/wiki'
+  urlRoot: 'http://localhost:3000/wiki/',
+
+  idAttribute: '_id'
 
 });

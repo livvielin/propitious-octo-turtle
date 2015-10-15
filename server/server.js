@@ -70,11 +70,23 @@ var postWiki = function (req, res) {
 
 };
 
+var deleteWiki = function (req, res) {
+  console.log('mongoDBServer deleteWiki');
+  console.log(req);
+
+  Wiki.remove({ _id: req.params.id }, function (err) {
+    res.send({ _id: req.params.id });
+  });
+};
+
 // Create route for GET request
 app.get('/wiki', getWiki);
 
 // Create route for POST request
 app.post('/wiki', postWiki);
+
+// Create route for DELETE request
+app.delete('/wiki/:id', deleteWiki);
 
 // Set up port
 var port = 3000;
