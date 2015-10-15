@@ -56,11 +56,15 @@ var postWiki = function (req, res) {
 
   console.log('mongoDBServer postWiki');
 
+  // Put MediaWiki API call here
+  var tvUrl = req.body.searchTerm.split(' ').join('_');
+  var url = 'https://en.wikipedia.org/w/index.php?action=render&title=List_of_' + tvUrl + '_episodes';
+
   // Create new wiki model, fill it, and save it to mongoDB
   var wiki = new Wiki();
   wiki.searchTerm = req.body.searchTerm;
   wiki.content = 'content!';
-  wiki.url = 'http://www.wikipedia.org';
+  wiki.url = url;
   wiki.save(function (err, result) {
     if (err) {
       console.error(err);
@@ -93,3 +97,17 @@ var port = 3000;
 // Have app listen on port specified above
 app.listen(port);
 console.log('Listening on port ' + port);
+
+// https://en.wikipedia.org/wiki/List_of_The_Big_Bang_Theory_episodes
+// https://en.wikipedia.org/w/index.php?action=render&title=The_Big_Bang_Theory
+// https://en.wikipedia.org/w/index.php?action=render&title=The_Big_Bang_Theory_(TV%20series)
+// https://en.wikipedia.org/w/index.php?action=render&title=List_of_The_Big_Bang_Theory_episodes
+// https://en.wikipedia.org/wiki/List_of_The_100_episodes
+// https://en.wikipedia.org/w/index.php?action=render&title=The_100_(TV%20series)
+// https://en.wikipedia.org/w/index.php?action=render&title=List_of_The_100_episodes
+// Get DOM elements
+// Search tr class vevent for td that has a date
+// Get air date column index by finding th with content 'Original air date'
+
+// Or perform the wikipedia search for tv show input plus (tv series)
+// then navigate to the episodes page by searching DOM for link 'list of episodes'
