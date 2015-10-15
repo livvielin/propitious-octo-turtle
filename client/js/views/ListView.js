@@ -15,6 +15,7 @@ var ListView = Backbone.View.extend({
     this.collection.fetch({
       success: function (response) {
         console.log('Successfully got wiki data!');
+        console.log(response);
         // Render on startup
         // Passed as callback so collection will sync with db before rendering
         context.render();

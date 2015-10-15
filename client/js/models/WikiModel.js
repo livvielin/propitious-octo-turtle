@@ -3,7 +3,9 @@ var WikiModel = Backbone.Model.extend({
   
   // Set defaults for the model
   defaults: {
-    searchTerm: ''
+    searchTerm: '',
+    airDate: '',
+    tvUrl: ''
   },
 
   urlRoot: 'http://localhost:3000/wiki/',

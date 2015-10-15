@@ -11,7 +11,7 @@ var Schema = mongoose.Schema;
 
 var WikiSchema = new Schema({
   searchTerm: String,
-  content: String,
+  airDate: {type: Date, default: Date.now},
   url: String
 });
 
@@ -63,7 +63,7 @@ var postWiki = function (req, res) {
   // Create new wiki model, fill it, and save it to mongoDB
   var wiki = new Wiki();
   wiki.searchTerm = req.body.searchTerm;
-  wiki.content = 'content!';
+  wiki.airDate = new Date.now();
   wiki.url = url;
   wiki.save(function (err, result) {
     if (err) {
@@ -76,7 +76,6 @@ var postWiki = function (req, res) {
 
 var deleteWiki = function (req, res) {
   console.log('mongoDBServer deleteWiki');
-  console.log(req);
 
   Wiki.remove({ _id: req.params.id }, function (err) {
     res.send({ _id: req.params.id });
@@ -107,7 +106,7 @@ console.log('Listening on port ' + port);
 // https://en.wikipedia.org/w/index.php?action=render&title=List_of_The_100_episodes
 // Get DOM elements
 // Search tr class vevent for td that has a date
-// Get air date column index by finding th with content 'Original air date'
+// Get air date column index by finding th with content 'Original air/release date'
 
 // Or perform the wikipedia search for tv show input plus (tv series)
 // then navigate to the episodes page by searching DOM for link 'list of episodes'
