@@ -63,7 +63,7 @@ var postWiki = function (req, res) {
   // Create new wiki model, fill it, and save it to mongoDB
   var wiki = new Wiki();
   wiki.searchTerm = req.body.searchTerm;
-  wiki.airDate = new Date.now();
+  // wiki.airDate = Date.now;
   wiki.url = url;
   wiki.save(function (err, result) {
     if (err) {

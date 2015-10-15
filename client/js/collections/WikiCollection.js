@@ -6,6 +6,7 @@ var WikiCollection = Backbone.Collection.extend({
   url: 'http://localhost:3000/wiki',
 
   addWiki: function (wiki) {
+    var context = this;
     // Format input by capitalizing first letters
     var showTitle = wiki;
     var showTitleSplit = showTitle.split(' ');
@@ -13,7 +14,6 @@ var WikiCollection = Backbone.Collection.extend({
       showTitleSplit[i] = showTitleSplit[i][0].toUpperCase() + showTitleSplit[i].substring(1);
     }
     var formattedTitle = showTitleSplit.join(' ');
-    this.add({ 'searchTerm': formattedTitle });
 
     // Instantiate a new wiki model to save to the database
     var wikiModel = new WikiModel({ 'searchTerm': formattedTitle });
@@ -21,6 +21,12 @@ var WikiCollection = Backbone.Collection.extend({
     wikiModel.save(null, {
       success: function (response) {
         console.log('Successfully saved wiki!');
+        console.log(response);
+        context.add({
+          'searchTerm': response.attributes.searchTerm,
+          'airDate': response.attributes.airDate,
+          'tvUrl': response.attributes.url
+        });
       },
       error: function () {
         console.log('Failed to save wiki!');
