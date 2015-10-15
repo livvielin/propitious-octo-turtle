@@ -6,12 +6,13 @@ var ListView = Backbone.View.extend({
 
   initialize: function () {
     // Listen for an added wiki to the collection
-    this.listenTo(this.collection, 'add', this.render);
+    this.listenTo(this.collection, 'add', this.getData);
     // Listen for a removed wiki to the collection
-    this.listenTo(this.collection, 'remove', this.render);
+    this.listenTo(this.collection, 'remove', this.getData);
+    this.getData();
+  },
 
-    // this.listenTo(this.collection, 'change', this.render);
-
+  getData: function () {
     // GET collection data from database
     var context = this;
     this.collection.fetch({

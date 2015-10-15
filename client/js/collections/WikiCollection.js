@@ -25,7 +25,7 @@ var WikiCollection = Backbone.Collection.extend({
         context.add({
           'searchTerm': response.attributes.searchTerm,
           'airDate': response.attributes.airDate,
-          'tvUrl': response.attributes.url
+          'url': response.attributes.url
         });
       },
       error: function () {
@@ -35,11 +35,10 @@ var WikiCollection = Backbone.Collection.extend({
   },
 
   updateWiki: function () {
+    var context = this;
     this.each(function (model) {
-      // Get model's url for HTTPS get request
       var url = model.get('url');
-      console.log(url);
-      // model.set('airDate', '10/28/15');
+      model.set('airDate', '10/28/15');
     });
   }
 

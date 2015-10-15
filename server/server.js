@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var http = require('http');
 
 var mongoURI = 'mongodb://localhost/wiki';
 // Connect to mongo database
@@ -24,12 +25,7 @@ var app = express();
 app.use(express.static(__dirname + '/../client'));
 app.use(bodyParser.json());
 
-// Function called in update (so it'll update on re-render) and post requests (initial)
-var searchWiki = function (url) {
-  // Submit request for html page based on url
-  // Search DOM
-  
-
+var getCurrentDate = function () {
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth() + 1;
@@ -42,7 +38,6 @@ var searchWiki = function (url) {
   }
   var currentDate = mm + '/' + dd + '/' + yyyy;
   return currentDate;
-  // return '10/28/2015';
 };
 
 // ROUTES
@@ -79,14 +74,13 @@ var postWiki = function (req, res) {
 
   // Put MediaWiki API call here
   var tvUrl = req.body.searchTerm.split(' ').join('_');
-  var url = 'https://en.wikipedia.org/w/index.php?action=render&title=List_of_' + tvUrl + '_episodes';
-
-  console.log(searchWiki(url));
+  // var url = 'http://en.wikipedia.org/w/index.php?action=render&title=List_of_' + tvUrl + '_episodes';
+  var url = 'http://en.wikipedia.org/wiki/List_of_' + tvUrl + '_episodes';
 
   // Create new wiki model, fill it, and save it to mongoDB
   var wiki = new Wiki();
   wiki.searchTerm = req.body.searchTerm;
-  wiki.airDate = searchWiki();
+  wiki.airDate = getCurrentDate();
   wiki.url = url;
   wiki.save(function (err, result) {
     if (err) {
@@ -95,6 +89,10 @@ var postWiki = function (req, res) {
     res.send(result);
   });
 
+};
+
+var updateWiki = function (req, res) {
+  console.log('mongoDBServer updateWiki');
 };
 
 var deleteWiki = function (req, res) {
@@ -110,6 +108,9 @@ app.get('/wiki', getWiki);
 
 // Create route for POST request
 app.post('/wiki', postWiki);
+
+// Create route for PUT request
+app.put('/wiki/:id', updateWiki);
 
 // Create route for DELETE request
 app.delete('/wiki/:id', deleteWiki);
