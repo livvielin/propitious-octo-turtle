@@ -42,18 +42,6 @@ var getCurrentDate = function () {
   return currentDate;
 };
 
-var scrape = function (url) {
-  console.log('scraping', url);
-
-  request(url, function (err, res, html) {
-    if (!err) {
-      var $ = cheerio.load(html);
-      airDate = $('title').text();
-      console.log(airDate);
-    }
-  });
-};
-
 // ROUTES
 
 // Set up GET and POST functions
@@ -87,9 +75,10 @@ var postWiki = function (req, res) {
   console.log('mongoDBServer postWiki');
 
   // Put MediaWiki API call here
-  var tvUrl = req.body.searchTerm.split(' ').join('-');
-  // var url = 'http://en.wikipedia.org/w/index.php?action=render&title=List_of_' + tvUrl + '_episodes';
+  // var tvUrl = req.body.searchTerm.split(' ').join('_');
   // var url = 'http://en.wikipedia.org/wiki/List_of_' + tvUrl + '_episodes';
+
+  var tvUrl = req.body.searchTerm.split(' ').join('-');
   var url = 'http://tvairdates.com/show/' + tvUrl;
 
   // Create new wiki model, fill it, and save it to mongoDB
@@ -108,25 +97,21 @@ var postWiki = function (req, res) {
 
 var updateWiki = function (req, res) {
   console.log('mongoDBServer updateWiki');
-  // var airDate = scrape(req.body.url);
-  // console.log(airDate);
 
   request(req.body.url, function (err, response, html) {
     if (!err) {
       var $ = cheerio.load(html);
       var json = { airDate: '' };
 
+      // Wikipedia
       // var tables = [];
       // $('tr.vevent').map(function (i, t) {
       //   tables.push($(this).html());
       // });
       // console.log(tables.length);
       // json.airDate = tables.pop();
-      
-      // setTimeout(function () {
-      //   console.log($('tr.next').children().last().html());
-      // }, 5000);
 
+      // TVAirDates
       var currentDate = getCurrentDate();
       var secondsUntilShow = $('.next-date').text(); // time left in seconds
       json.airDate = $('.next-date').text() || 'TBA';
