@@ -27,19 +27,18 @@ var app = express();
 app.use(express.static(__dirname + '/../client'));
 app.use(bodyParser.json());
 
-var getCurrentDate = function () {
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth() + 1;
-  var yyyy = today.getFullYear();
+var formatDate = function (date) {
+  var dd = date.getDate();
+  var mm = date.getMonth() + 1;
+  var yyyy = date.getFullYear();
   if (dd < 10) {
     dd = '0' + dd;
   }
   if (mm < 10) {
     mm = '0' + mm;
   }
-  var currentDate = mm + '/' + dd + '/' + yyyy;
-  return currentDate;
+  var formattedDate = mm + '/' + dd + '/' + yyyy;
+  return formattedDate;
 };
 
 // ROUTES
@@ -112,12 +111,11 @@ var updateWiki = function (req, res) {
       // json.airDate = tables.pop();
 
       // TVAirDates
-      var currentDate = getCurrentDate();
       var secondsUntilShow = $('.next-date').text(); // time left in seconds
       var timeObject = new Date();
       var airDate = new Date(timeObject.getTime() + (parseInt(secondsUntilShow) * 1000));
       if (secondsUntilShow) {
-        json.airDate = airDate;
+        json.airDate = formatDate(airDate);
       } else {
         json.airDate = 'TBA';
       }
