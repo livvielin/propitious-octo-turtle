@@ -31,13 +31,15 @@ var formatDate = function (date) {
   var dd = date.getDate();
   var mm = date.getMonth() + 1;
   var yyyy = date.getFullYear();
+  var day = date.getDay();
   if (dd < 10) {
     dd = '0' + dd;
   }
   if (mm < 10) {
     mm = '0' + mm;
   }
-  var formattedDate = mm + '/' + dd + '/' + yyyy;
+  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var formattedDate = days[day] + ' ' + mm + '/' + dd + '/' + yyyy;
   return formattedDate;
 };
 
