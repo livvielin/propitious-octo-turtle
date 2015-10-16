@@ -37,11 +37,10 @@ var WikiCollection = Backbone.Collection.extend({
   updateWiki: function () {
     var context = this;
     this.each(function (model) {
-      // var url = model.get('url');
-      // model.set('airDate', '10/28/15');
       console.log('updateWiki');
       model.save(null, {
         success: function (response) {
+          model.set('airDate', response.attributes.airDate);
           console.log('Successfully UPDATED wiki with _id: ' + response.id);
         },
         error: function (err) {

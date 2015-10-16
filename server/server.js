@@ -114,7 +114,14 @@ var updateWiki = function (req, res) {
       // TVAirDates
       var currentDate = getCurrentDate();
       var secondsUntilShow = $('.next-date').text(); // time left in seconds
-      json.airDate = $('.next-date').text() || 'TBA';
+      var timeObject = new Date();
+      var airDate = new Date(timeObject.getTime() + (parseInt(secondsUntilShow) * 1000));
+      if (secondsUntilShow) {
+        json.airDate = airDate;
+      } else {
+        json.airDate = 'TBA';
+      }
+      // json.airDate = $('.next-date').text() || 'TBA';
 
       Wiki.update({ _id: req.params.id }, json, function (err) {
         res.send(json);
