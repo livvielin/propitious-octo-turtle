@@ -140,7 +140,9 @@ var updateWiki = function (req, res) {
       $('table tr.vevent').each(function(trIndex, tr) {
         var tdText = $(this).find('td .bday').text();
         if (tdText) {
-          dates.push(new Date(tdText));
+          var date = new Date(tdText);
+          // dates.push(date);
+          dates.push(new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
         }
       });
       var airDate = findNextAirDate(dates);
