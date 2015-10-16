@@ -43,6 +43,36 @@ var formatDate = function (date) {
   return formattedDate;
 };
 
+var getCurrentDate = function () {
+  var date = new Date();
+  var dd = date.getDate();
+  var mm = date.getMonth() + 1;
+  var yyyy = date.getFullYear();
+  var day = date.getDay();
+  if (dd < 10) {
+    dd = '0' + dd;
+  }
+  if (mm < 10) {
+    mm = '0' + mm;
+  }
+  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var formattedDate = days[day] + ' ' + mm + '/' + dd + '/' + yyyy;
+  return formattedDate;
+};
+
+var findNextAirDate = function (dates) {
+  var date = new Date();
+  var nextAirDate = 'TBD';
+  for (var i = 0; i < dates.length; i++) {
+    var diff = date - dates[i];
+    if (diff <= 0) {
+      nextAirDate = dates[i];
+      break;
+    }
+  }
+  return nextAirDate;
+};
+
 // ROUTES
 
 // Set up GET and POST functions
@@ -76,11 +106,11 @@ var postWiki = function (req, res) {
   console.log('mongoDBServer postWiki');
 
   // Put MediaWiki API call here
-  // var tvUrl = req.body.searchTerm.split(' ').join('_');
-  // var url = 'http://en.wikipedia.org/wiki/List_of_' + tvUrl + '_episodes';
+  var tvUrl = req.body.searchTerm.split(' ').join('_');
+  var url = 'http://en.wikipedia.org/wiki/List_of_' + tvUrl + '_episodes';
 
-  var tvUrl = req.body.searchTerm.split(' ').join('-');
-  var url = 'http://tvairdates.com/show/' + tvUrl;
+  // var tvUrl = req.body.searchTerm.split(' ').join('-');
+  // var url = 'http://tvairdates.com/show/' + tvUrl;
 
   // Create new wiki model, fill it, and save it to mongoDB
   var wiki = new Wiki();
@@ -105,23 +135,30 @@ var updateWiki = function (req, res) {
       var json = { airDate: '' };
 
       // Wikipedia
-      // var tables = [];
-      // $('tr.vevent').map(function (i, t) {
-      //   tables.push($(this).html());
-      // });
-      // console.log(tables.length);
-      // json.airDate = tables.pop();
+      var dates = [];
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      $('table tr.vevent').each(function(trIndex, tr) {
+        var tdText = $(this).find('td .bday').text();
+        if (tdText) {
+          dates.push(new Date(tdText));
+        }
+      });
+      var airDate = findNextAirDate(dates);
+      if (typeof airDate === 'string') {
+        json.airDate = airDate;
+      } else {
+        json.airDate = formatDate(airDate);
+      }
 
       // TVAirDates
-      var secondsUntilShow = $('.next-date').text(); // time left in seconds
-      var timeObject = new Date();
-      var airDate = new Date(timeObject.getTime() + (parseInt(secondsUntilShow) * 1000));
-      if (secondsUntilShow) {
-        json.airDate = formatDate(airDate);
-      } else {
-        json.airDate = 'TBA';
-      }
-      // json.airDate = $('.next-date').text() || 'TBA';
+      // var secondsUntilShow = $('.next-date').text(); // time left in seconds
+      // var timeObject = new Date();
+      // var airDate = new Date(timeObject.getTime() + (parseInt(secondsUntilShow) * 1000));
+      // if (secondsUntilShow) {
+      //   json.airDate = formatDate(airDate);
+      // } else {
+      //   json.airDate = 'TBA';
+      // }
 
       Wiki.update({ _id: req.params.id }, json, function (err) {
         res.send(json);
