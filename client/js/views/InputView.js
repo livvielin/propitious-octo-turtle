@@ -15,7 +15,7 @@ var InputView = Backbone.View.extend({
   },
 
   render: function () {
-    this.$el.attr('placeholder', 'Search');
+    this.$el.attr('placeholder', 'TV show title');
   },
 
   // Listen specifically for the 'enter' key on a keypress

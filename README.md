@@ -1,5 +1,5 @@
 # propitious-octo-turtle
-Ways to use:
+Ways to use AirFlare:
 Search Wikipedia to...
-- find random tidbits to start the day
 - find when the newest episode of ___ is showing
+- (coming soon) find random tidbits to start the day

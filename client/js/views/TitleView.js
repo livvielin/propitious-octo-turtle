@@ -9,7 +9,7 @@ var TitleView = Backbone.View.extend({
   },
 
   render: function () {
-    this.$el.text('Search Wiki');
+    this.$el.text('AirFlare');
   }
 
 });
