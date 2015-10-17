@@ -5,7 +5,7 @@ var http = require('http');
 var cheerio = require('cheerio');
 var request = require('request');
 
-var mongoURI = 'mongodb://localhost/wiki';
+var mongoURI = process.env.MONGOLAB_URI;
 // Connect to mongo database
 mongoose.connect(mongoURI);
 
