@@ -1,22 +1,14 @@
 {
-  "name": "blogroll-backbone",
+  "name": "AirFlare",
   "version": "1.0.0",
-  "description": "Tutorial follow-along from https://www.youtube.com/watch?list=PLX2HoWE32I8OCnumQmc9lcjnHIjAamIy6&amp;v=4WJLlWpzpP0",
+  "description": "Search for show air dates",
   "main": "scripts.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/livvielin/blogroll-backbone.git"
-  },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/livvielin/blogroll-backbone/issues"
-  },
-  "homepage": "https://github.com/livvielin/blogroll-backbone#readme",
   "dependencies": {
     "body-parser": "^1.14.0",
     "cheerio": "^0.19.0",
