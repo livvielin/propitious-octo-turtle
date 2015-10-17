@@ -3,7 +3,8 @@ var WikiCollection = Backbone.Collection.extend({
 
   model: WikiModel,
 
-  url: 'http://localhost:3000/wiki',
+  // url: 'http://localhost:3000/wiki',
+  url: 'https://mysterious-sea-9712.herokuapp.com/wiki',
 
   addWiki: function (wiki) {
     var context = this;

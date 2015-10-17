@@ -8,7 +8,8 @@ var WikiModel = Backbone.Model.extend({
     url: ''
   },
 
-  urlRoot: 'http://localhost:3000/wiki/',
+  // urlRoot: 'http://localhost:3000/wiki/',
+  urlRoot: 'https://mysterious-sea-9712.herokuapp.com/wiki',
 
   idAttribute: '_id'
 
