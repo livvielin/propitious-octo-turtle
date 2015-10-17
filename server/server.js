@@ -192,7 +192,8 @@ app.put('/wiki/:id', updateWiki);
 app.delete('/wiki/:id', deleteWiki);
 
 // Set up port
-var port = 3000;
+// var port = 3000;
+var port = process.env.PORT;
 // Have app listen on port specified above
 app.listen(port);
 console.log('Listening on port ' + port);
