@@ -5,8 +5,7 @@ var http = require('http');
 var cheerio = require('cheerio');
 var request = require('request');
 
-// var mongoURI = 'mongodb://localhost/wiki';
-var mongoURI = process.env.MONGOLAB_URI;
+var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/wiki';
 // Connect to mongo database
 mongoose.connect(mongoURI);
 
@@ -66,7 +65,8 @@ var findNextAirDate = function (dates) {
   var nextAirDate = 'TBD';
   for (var i = 0; i < dates.length; i++) {
     var diff = date - dates[i];
-    if (diff <= 0) {
+    // Check if difference is less than one day in milliseconds
+    if (diff <= 86400000) {
       nextAirDate = dates[i];
       break;
     }
@@ -192,8 +192,7 @@ app.put('/wiki/:id', updateWiki);
 app.delete('/wiki/:id', deleteWiki);
 
 // Set up port
-// var port = 3000;
-var port = process.env.PORT;
+var port = process.env.PORT || 3000;
 // Have app listen on port specified above
 app.listen(port);
 console.log('Listening on port ' + port);
